@@ -266,3 +266,9 @@ body.menu-open {
   height: 100vh;
   overflow: hidden;
 }
+
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  display: none;
+}

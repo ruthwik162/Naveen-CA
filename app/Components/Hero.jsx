@@ -60,7 +60,7 @@ const Hero = () => {
                         </div>
 
                         {/* 3. CENTER IMAGE - Aspect Ratio controlled for mobile screens */}
-                        <div className='col-span-6 md:col-span-7 h-[40vh] md:h-[60vh] overflow-hidden relative group'>
+                        <div className='col-span-6 md:col-span-5 h-[40vh] md:h-[60vh] overflow-hidden relative group'>
                             <div className='img-reveal w-full h-full bg-zinc-100'>
                                 <img
                                     src={images.naveen.src}
@@ -74,7 +74,7 @@ const Hero = () => {
                         </div>
 
                         {/* 4. DATA SECTION - Small text, high density */}
-                        <div className='col-span-6 md:col-span-5 flex flex-col justify-between py-2'>
+                        <div className='col-span-6 md:col-start-7 md:col-span-5 flex flex-col justify-between py-2'>
                             <div className='space-y-6'>
                                 <div className='border-anim border-t border-black/10 pt-4'>
                                     <h4 className='stat-item text-[3vw] md:text-[0.7vw] uppercase font-black mb-2 flex items-center gap-2'>

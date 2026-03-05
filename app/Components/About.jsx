@@ -5,53 +5,54 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
-import { Plus } from 'lucide-react'
+import { Plus, Fingerprint, MoveRight, ArrowDown } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
 const About = () => {
     const sectionRef = useRef()
-    const textRef = useRef()
+    const containerRef = useRef()
 
     useGSAP(() => {
-        // 1. Text Highlight Effect (The Narrative)
-        const split = new SplitText(".reveal-about", { type: "words" })
+        // 1. Smooth Text Reveal (Scrollytelling)
+        const childSplit = new SplitText(".narrative-text", { type: "words", linesClass: "split-child" });
         
-        gsap.from(split.words, {
+        gsap.from(childSplit.words, {
             scrollTrigger: {
-                trigger: sectionRef.current,
-                start: "top 80%",
+                trigger: ".narrative-text",
+                start: "top 85%",
                 end: "bottom 60%",
-                scrub: true,
+                scrub: 0.5,
             },
             opacity: 0.1,
+            y: 10,
             stagger: 0.1,
-            ease: "none"
+            ease: "power2.out"
         })
 
-        // 2. Horizontal Lines "Blueprinting"
-        gsap.from(".about-line", {
+        // 2. Blueprint Line Animation
+        gsap.from(".draw-line", {
             scrollTrigger: {
                 trigger: sectionRef.current,
                 start: "top 70%",
             },
             scaleX: 0,
-            duration: 1.5,
-            stagger: 0.3,
+            duration: 2,
+            stagger: 0.4,
             transformOrigin: "left",
-            ease: "power4.inOut"
+            ease: "expo.inOut"
         })
 
-        // 3. Floating Stats Parallax
-        gsap.to(".floating-stat", {
+        // 3. Image/Data Block Reveal
+        gsap.from(".reveal-block", {
             scrollTrigger: {
-                trigger: sectionRef.current,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true
+                trigger: ".reveal-block",
+                start: "top 90%",
             },
-            y: -100,
-            ease: "none"
+            y: 100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "expo.out"
         })
 
     }, { scope: sectionRef })
@@ -59,67 +60,109 @@ const About = () => {
     return (
         <section 
             ref={sectionRef} 
-            className='w-full min-h-screen bg-white relative py-[10vw] px-4 md:px-[2vw] overflow-hidden'
+            className='w-full bg-[#FDFDFD] relative py-24 md:py-40 px-4 md:px-[2vw] overflow-hidden font-[PPNeueMontreal]'
         >
-            {/* 12-Column Blueprint Background (Inherited from Hero) */}
-            <div className="absolute inset-0 grid grid-cols-6 md:grid-cols-12 px-4 md:px-[2vw] pointer-events-none">
+            {/* GRID OVERLAY */}
+            <div className="absolute inset-0 grid grid-cols-6 md:grid-cols-12 px-4 md:px-[2vw] pointer-events-none opacity-20">
                 {[...Array(13)].map((_, i) => (
-                    <div key={i} className="border-r border-black/[0.03] h-full" />
+                    <div key={i} className="border-r border-black/[0.1] h-full" />
                 ))}
             </div>
 
-            <div className='relative z-10 grid grid-cols-6 md:grid-cols-12 gap-8'>
+            <div className='relative z-10 max-w-[1400px] mx-auto'>
                 
-                {/* Small Label */}
-                <div className='col-span-6 md:col-span-12 about-line border-t border-black/10 pt-4'>
-                    <p className='text-[3vw] md:text-[0.7vw] uppercase font-black tracking-widest text-indigo-600'>
-                        01 — Professional Context
-                    </p>
-                </div>
-
-                {/* Main Narrative - Huge Scrollytelling text */}
-                <div className='col-span-6 md:col-start-3 md:col-span-8 mt-[5vw]'>
-                    <h2 className='reveal-about text-[8vw] md:text-[4.5vw] leading-[0.9] font-medium tracking-tight text-black'>
-                        We operate at the intersection of <span className='italic font-serif'>meticulous audit</span> and strategic growth. Founded by Naveen Sangewar, our firm was built to replace traditional paperwork with modern, <span className='text-indigo-600 underline'>insight-driven</span> financial architecture.
-                    </h2>
-                </div>
-
-                {/* Secondary Grid Section */}
-                <div className='col-span-6 md:col-span-12 mt-[10vw] about-line border-t border-black/10 pt-8 grid grid-cols-6 md:grid-cols-12 gap-8'>
-                    
-                    {/* Vision Stat */}
-                    <div className='col-span-3 md:col-span-3 floating-stat'>
-                        <h4 className='text-[10vw] md:text-[5vw] font-black leading-none italic'>100%</h4>
-                        <p className='text-[3vw] md:text-[0.7vw] uppercase font-bold opacity-40 mt-2'>Compliance Accuracy</p>
-                    </div>
-
-                    {/* Description Paragraph */}
-                    <div className='col-span-6 md:col-start-6 md:col-span-4'>
-                        <p className='text-[4.5vw] md:text-[1.1vw] leading-relaxed text-black/70'>
-                            In an era of rapid regulatory changes, we provide more than just signatures. We provide a roadmap. Whether you are an MSME scaling up or a corporate navigating complex GST/Income Tax laws, our expertise ensures your foundation is unbreakable.
-                        </p>
-                        
-                        <div className='flex items-center gap-4 mt-8 group cursor-pointer'>
-                            <div className='w-12 h-12 rounded-full border border-black/10 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all duration-500'>
-                                <Plus size={20} className='group-hover:rotate-90 transition-transform duration-500' />
-                            </div>
-                            <span className='text-[3.5vw] md:text-[0.8vw] uppercase font-black tracking-widest'>Our Methodology</span>
+                {/* PHASE 01: THE ORIGIN */}
+                <div className='grid grid-cols-6 md:grid-cols-12 gap-y-12 mb-32'>
+                    <div className='col-span-6 md:col-span-4'>
+                        <div className='flex items-center gap-4 mb-8'>
+                            <span className='w-12 h-[1px] bg-indigo-600 draw-line'></span>
+                            <p className='text-[10px] uppercase font-black tracking-[0.4em] text-indigo-600'>01 / Genesis</p>
+                        </div>
+                        <div className='reveal-block'>
+                            <h3 className='text-[8vw] md:text-[2.5vw] font-semibold leading-none uppercase tracking-tighter mb-6'>
+                                From Ledger to <br/> Logic.
+                            </h3>
+                            <p className='text-[4.5vw] md:text-[1.1vw] text-black/60 leading-relaxed max-w-sm'>
+                                Naveen Sangewar founded this practice not to count numbers, but to make numbers count. We saw a gap between "Compliance" and "Clarity."
+                            </p>
                         </div>
                     </div>
 
-                    {/* Tertiary Stat */}
-                    <div className='col-span-3 md:col-start-11 md:col-span-2 floating-stat'>
-                        <p className='text-[4vw] md:text-[1vw] font-bold leading-tight'>Modern <br/> Hyderabad <br/> Office</p>
-                        <div className='w-full h-[1px] bg-black/10 my-4' />
-                        <p className='text-[3vw] md:text-[0.6vw] uppercase opacity-40'>Global Standards</p>
+                    <div className='col-span-6 md:col-start-6 md:col-span-7'>
+                        <h2 className='narrative-text text-[8vw] md:text-[4.5vw] leading-[1] font-medium tracking-tight text-black'>
+                            We operate at the intersection of <span className='italic font-light text-black/30 underline decoration-indigo-500/30'>meticulous audit</span> and strategic growth. Founded in Hyderabad, our firm was built to replace traditional paperwork with modern, <span className='text-indigo-600'>insight-driven</span> financial architecture.
+                        </h2>
+                    </div>
+                </div>
+
+                {/* PHASE 02: THE METHODOLOGY (Visual Break) */}
+                <div className='grid grid-cols-6 md:grid-cols-12 gap-8 mb-32'>
+                    <div className='col-span-6 md:col-span-12 draw-line border-t border-black/10' />
+                    
+                    <div className='col-span-3 md:col-span-3 pt-8'>
+                        <p className='text-[9px] uppercase font-bold opacity-30 mb-12 tracking-widest'>Core Philosophy</p>
+                        <div className='space-y-8'>
+                           <div>
+                                <h4 className='text-[12px] font-black uppercase mb-2 flex items-center gap-2'>
+                                    <Fingerprint size={14} className='text-indigo-600'/> Precision
+                                </h4>
+                                <p className='text-[10px] uppercase font-bold opacity-50 tracking-wider'>Zero-margin for error in statutory compliance.</p>
+                           </div>
+                           <div>
+                                <h4 className='text-[12px] font-black uppercase mb-2 flex items-center gap-2'>
+                                    <MoveRight size={14} className='text-indigo-600'/> Velocity
+                                </h4>
+                                <p className='text-[10px] uppercase font-bold opacity-50 tracking-wider'>MSME scaling at the speed of modern markets.</p>
+                           </div>
+                        </div>
+                    </div>
+
+                    <div className='col-span-3 md:col-start-5 md:col-span-4 pt-8'>
+                         <div className='aspect-[4/5] bg-zinc-100 overflow-hidden reveal-block'>
+                            <img 
+                                src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2000&auto=format&fit=crop" 
+                                className='w-full h-full object-cover grayscale contrast-125'
+                                alt="Financial Architecture"
+                            />
+                         </div>
+                    </div>
+
+                    <div className='col-span-6 md:col-start-10 md:col-span-3 pt-8 flex flex-col justify-between'>
+                        <div className='reveal-block'>
+                            <h4 className='text-[10vw] md:text-[5vw] font-black leading-none italic text-indigo-600'>100%</h4>
+                            <p className='text-[3vw] md:text-[0.7vw] uppercase font-bold opacity-40 mt-4 tracking-widest leading-relaxed'>
+                                Compliance Accuracy <br/> Across 45+ Active Sectors
+                            </p>
+                        </div>
+                        <div className='mt-20 md:mt-0'>
+                            <p className='text-[11px] leading-relaxed opacity-70'>
+                                "A balance sheet is just the skeleton. Our job is to build the muscle that allows the business to move."
+                            </p>
+                            <p className='text-[10px] font-bold mt-4 uppercase tracking-tighter'>— Naveen Sangewar, Founder</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* PHASE 03: THE CALL TO ACTION */}
+                <div className='grid grid-cols-6 md:grid-cols-12'>
+                    <div className='col-span-6 md:col-span-12 flex flex-col md:flex-row items-center justify-between border-y border-black/10 py-12 group cursor-pointer'>
+                         <h2 className='text-[8vw] md:text-[3vw] font-semibold uppercase tracking-tighter'>
+                            Ready to <span className='italic font-light'>Engineer</span> Your Growth?
+                         </h2>
+                         <div className='mt-8 md:mt-0 flex items-center gap-6'>
+                            <span className='text-[10px] uppercase font-black tracking-widest group-hover:text-indigo-600 transition-colors'>Explore Methodology</span>
+                            <div className='w-16 h-16 rounded-full bg-black text-white flex items-center justify-center group-hover:bg-indigo-600 transition-all duration-500'>
+                                <ArrowDown size={24} className='group-hover:translate-y-1 transition-transform' />
+                            </div>
+                         </div>
                     </div>
                 </div>
 
             </div>
 
-            {/* Aesthetic "Folder" Detail at the bottom */}
-            <div className='absolute bottom-10 right-10 opacity-10 hidden md:block'>
-                <p className='text-[5vw] font-black uppercase tracking-tighter'>About_Firm_v2.0</p>
+            {/* Aesthetic Detail */}
+            <div className='absolute bottom-10 left-10 opacity-5 font-mono text-[10px]'>
+                COORD: 17.3850° N, 78.4867° E // HYD_OFFICE
             </div>
         </section>
     )
