@@ -150,6 +150,8 @@
 }
 
 
+
+
 /* Use globally */
 body {
   font-family: 'MyFont', sans-serif;
@@ -158,6 +160,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 
@@ -231,7 +234,7 @@ body.loading {
 #preloader {
   position: fixed;
   inset: 0;
-  /* change color */  
+  /* change color */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -256,4 +259,10 @@ html.menu-open,
 body.menu-open {
   overflow: hidden !important;
   height: 100vh !important;
+}
+
+
+.body-lock {
+  height: 100vh;
+  overflow: hidden;
 }
