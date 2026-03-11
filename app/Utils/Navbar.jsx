@@ -36,9 +36,9 @@ const Navbar = () => {
       // Slide Drawer In
       gsap.to(drawerRef.current, { x: 0, duration: 1, ease: "expo.inOut" });
       // Stagger Links
-      gsap.fromTo(".drawer-link", 
-        { x: 50, opacity: 0 }, 
-        { x: 0, opacity: 1, duration: 0.8, stagger: 0.05, ease: "power4.out", delay: 0.4 }
+      gsap.fromTo(".drawer-link",
+        { x: 50, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.8, stagger: 0.05, ease: "power4.out", delay: 0.35 }
       );
     } else {
       gsap.to(overlayRef.current, { opacity: 0, pointerEvents: "none", duration: 0.5 });
@@ -49,7 +49,7 @@ const Navbar = () => {
   return (
     <>
       {/* ---- BACKDROP OVERLAY ---- */}
-      <div 
+      <div
         ref={overlayRef}
         onClick={() => setMenuOpen(false)}
         className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[40] opacity-0 pointer-events-none transition-opacity duration-500"
@@ -58,7 +58,7 @@ const Navbar = () => {
       {/* ---- SLIDE-OUT DRAWER ---- */}
       <div
         ref={drawerRef}
-        className="fixed top-0 right-0 w-full md:w-[450px] h-full bg-[#FDFDFD] text-[#111] z-[110] flex flex-col translate-x-full shadow-2xl border-l border-black/5"
+        className="fixed top-0 right-0 w-full md:w-[450px] h-full bg-[#FDFDFD] text-[#111] z-[40] flex flex-col translate-x-full shadow-2xl border-l border-black/5"
       >
         {/* Drawer Header (Internal) */}
         <div className="p-8 border-b border-black/5 flex justify-between items-center">
@@ -66,12 +66,7 @@ const Navbar = () => {
             <Cpu size={14} className="text-indigo-600 animate-pulse" />
             <span className="text-[9px] font-black uppercase tracking-[0.3em] opacity-40">System_Access</span>
           </div>
-          <button 
-            onClick={() => setMenuOpen(false)}
-            className="text-[10px] uppercase font-bold tracking-widest flex items-center gap-2 hover:text-indigo-600 transition-colors"
-          >
-            Close <X size={14} />
-          </button>
+
         </div>
 
         {/* Drawer Content */}
@@ -101,65 +96,78 @@ const Navbar = () => {
           {/* Drawer Data Footer */}
           <div className="pt-12 space-y-8">
             <div className="grid grid-cols-2 gap-4">
-               <div>
-                 <p className="text-[8px] uppercase font-black opacity-30 tracking-[0.4em] mb-2">Practice HQ</p>
-                 <p className="text-[10px] font-bold uppercase tracking-widest">Hyderabad, IN</p>
-               </div>
-               <div>
-                 <p className="text-[8px] uppercase font-black opacity-30 tracking-[0.4em] mb-2">Availability</p>
-                 <p className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
-                   <div className="w-1.5 h-1.5 bg-green-500 rounded-full" /> Slots Open Q2
-                 </p>
-               </div>
+              <div>
+                <p className="text-[8px] uppercase font-black opacity-30 tracking-[0.4em] mb-2">Practice HQ</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest">Hyderabad, IN</p>
+              </div>
+              <div>
+                <p className="text-[8px] uppercase font-black opacity-30 tracking-[0.4em] mb-2">Availability</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full" /> Slots Open Q2
+                </p>
+              </div>
             </div>
-            
+
             <div className="bg-zinc-50 p-6 rounded-sm border border-black/[0.03]">
-               <p className="text-[9px] font-mono opacity-40 leading-relaxed uppercase">
-                 Our methodology utilizes forensic-grade data analysis to ensure statutory integrity for the modern corporate entity.
-               </p>
+              <p className="text-[9px] font-mono opacity-40 leading-relaxed uppercase">
+                Our methodology utilizes forensic-grade data analysis to ensure statutory integrity for the modern corporate entity.
+              </p>
             </div>
           </div>
         </div>
       </div>
 
       {/* ---- PERMANENT HUD NAV ---- */}
-      <nav className="fixed top-0 inset-x-0 z-[100] p-6 md:p-10 pointer-events-none">
-        <div className="flex justify-between items-start">
-          
-          {/* Identity */}
-          <div className="pointer-events-auto bg-white/50 backdrop-blur-md p-4 border border-black/5 rounded-sm">
-            <Link href="/" className="flex flex-col">
-              <span className="text-[12px] md:text-[14px] font-black uppercase tracking-[0.2em] leading-none">
-                SNGWR <span className="font-light text-black/40">&</span> CO
-              </span>
-              <span className="text-[7px] uppercase tracking-[0.5em] font-bold opacity-30 mt-1">
-                Forensic Architecture
-              </span>
-            </Link>
-          </div>
+      <nav className="fixed top-0 inset-x-0 z-[100] p-6 mix-blend-difference text-white md:p-10 pointer-events-none">
+        <div className="flex justify-between items-center ">
 
-          {/* Trigger */}
-          <div className="flex z-[150] flex-col items-end gap-6 pointer-events-auto">
+          {/* 1. HIGH-END LOGO STYLE */}
+          <Link href="/" className="pointer-events-auto group">
+            <div className="flex items-center gap-5">
+              {/* Vertical accent line */}
+              <div className="h-8 w-[1px] bg-black/10 group-hover:bg-indigo-600 transition-colors duration-500" />
+
+              <div className="flex flex-col text-white mix-blend-difference">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-lg md:text-xl  uppercase tracking-[-0.05em] leading-none">
+                    Sangewar
+                  </span>
+                  <span className="text-lg md:text-xl font-extralight italic uppercase tracking-[-0.05em] leading-none opacity-40">
+                    & Co.
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-[8px] font-bold uppercase tracking-[0.3em] opacity-60">
+                    Chartered Accountancy
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          {/* 2. MINIMALIST HUD MENU TRIGGER */}
+          <div className="flex items-center gap-8 pointer-events-auto">
+
+
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="group relative w-12 h-12 md:w-16 md:h-16 flex flex-col items-center justify-center gap-1.5 bg-black text-white rounded-full transition-transform active:scale-90"
+              className="relative w-14 h-14 md:w-16 md:h-16 group flex items-center justify-center bg-black text-white rounded-sm transition-all duration-500 overflow-hidden active:scale-95"
             >
-               <span className={`w-5 h-[1.5px] bg-white transition-all duration-500 ${menuOpen ? 'rotate-45 translate-y-[3px]' : ''}`} />
-               <span className={`w-5 h-[1.5px] bg-white transition-all duration-500 ${menuOpen ? '-rotate-45 -translate-y-[4px]' : ''}`} />
-               
-               {/* Hover Effect */}
-               <div className="absolute inset-0 bg-indigo-600 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 -z-10" />
-            </button>
+              {/* Background Hover Animation */}
+              <div className="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
 
-            {/* HUD Status */}
-            <div className="hidden md:flex flex-col items-end opacity-40">
-               <div className="flex items-center gap-2">
-                 <Hash size={8} />
-                 <span className="text-[7px] uppercase font-black tracking-[0.4em]">Node_v.2026</span>
-               </div>
-               <span className="text-[7px] font-mono tracking-widest uppercase mt-1">Status: Active</span>
-            </div>
+              {/* The "Mechanical" Icon */}
+              <div className="relative z-10 flex flex-col gap-[4px] items-end group-hover:items-center transition-all duration-500">
+                <span className={`h-[1px] bg-white transition-all duration-500 ${menuOpen ? 'w-6 rotate-45 translate-y-[2.5px]' : 'w-8'}`} />
+                <span className={`h-[1px] bg-white transition-all duration-500 ${menuOpen ? 'w-6 -rotate-45 -translate-y-[2.5px]' : 'w-5'}`} />
+              </div>
+
+              {/* HUD Corner Accents (The perfectionist touch) */}
+              <div className="absolute top-1 left-1 w-1 h-1 border-t border-l border-white/30" />
+              <div className="absolute bottom-1 right-1 w-1 h-1 border-b border-r border-white/30" />
+            </button>
           </div>
+
         </div>
       </nav>
     </>

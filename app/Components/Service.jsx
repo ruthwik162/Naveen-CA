@@ -3,44 +3,60 @@
 import React, { useState, useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
-import { Plus, Minus, ArrowUpRight, ShieldCheck, Zap, BarChart3, Fingerprint, Activity, Terminal } from 'lucide-react'
+import { 
+  Plus, 
+  Minus, 
+  ArrowUpRight, 
+  ShieldCheck, 
+  Zap, 
+  BarChart3, 
+  Fingerprint, 
+  Terminal,
+  Cpu,
+  Layers,
+  Scale
+} from 'lucide-react'
 
 const services = [
   {
     id: "01",
-    category: "Taxation",
-    title: "Regulatory Architecture",
-    description: "We design robust tax frameworks that balance efficiency with total compliance. From GST algorithmic management to high-stakes litigation, we act as your fiscal firewall.",
+    category: "Defensive",
+    title: "Taxation Architecture",
+    description: "Navigating the volatile landscape of Direct & Indirect taxation. We design robust GST frameworks and Income Tax strategies that minimize leakage while maintaining an impenetrable compliance posture during assessments.",
     icon: <ShieldCheck className="w-4 h-4" />,
-    tags: ["Direct Tax", "GST Strategy", "Litigation"],
-    dataPoint: "TRS-99.2%"
+    tags: ["GST Algorithmic Management", "International Transfer Pricing", "Tax Litigation"],
+    dataPoint: "COMPLIANCE-100",
+    flow: ["Structural Assessment", "Liability Optimization", "Statutory Filing"]
   },
   {
     id: "02",
-    category: "Assurance",
-    title: "Forensic Intelligence",
-    description: "Statutory auditing reimagined as business intelligence. We don't just verify numbers; we analyze internal workflows to detect anomalies and strengthen integrity.",
+    category: "Integrity",
+    title: "Forensic Assurance",
+    description: "Statutory auditing reimagined as business intelligence. Beyond the balance sheet, we verify the integrity of your internal controls and financial reporting standards (Ind AS) to ensure investor-ready transparency.",
     icon: <Fingerprint className="w-4 h-4" />,
-    tags: ["Statutory Audit", "Internal Audit", "Fraud"],
-    dataPoint: "ERR-0.01%"
+    tags: ["Statutory Audit", "Internal Risk Control", "Fraud Detection"],
+    dataPoint: "ERROR-MARGIN: 0.00%",
+    flow: ["Data Ingestion", "Anomaly Detection", "Certification"]
   },
   {
     id: "03",
-    category: "Advisory",
-    title: "Growth Engineering",
-    description: "Strategic capital scaling and project financing. We translate your business vision into Detailed Project Reports (DPRs) that resonate with institutional banks.",
+    category: "Structural",
+    title: "Capital Engineering",
+    description: "Fueling enterprise expansion through project financing and valuation. We translate your operational vision into high-fidelity Detailed Project Reports (DPRs) that secure institutional funding and venture capital.",
     icon: <Zap className="w-4 h-4" />,
-    tags: ["Valuation", "Project Finance", "M&A"],
-    dataPoint: "ROI-MAX"
+    tags: ["Project Reports (DPR)", "CMA Data Analysis", "Business Valuation"],
+    dataPoint: "FUNDING-READY",
+    flow: ["Projection Modeling", "Debt Structuring", "Bank Liaison"]
   },
   {
     id: "04",
-    category: "Corporate",
-    title: "Systemic Compliance",
-    description: "Total lifecycle management for the modern enterprise. From ROC filings to FEMA international transfer pricing, we ensure your machine runs without technical debt.",
+    category: "Systemic",
+    title: "Corporate Governance",
+    description: "End-to-end lifecycle management for modern corporations. From ROC annual filings to FEMA cross-border regulations, we ensure your legal entity operates without technical or regulatory debt.",
     icon: <BarChart3 className="w-4 h-4" />,
-    tags: ["ROC", "FEMA", "Secretarial"],
-    dataPoint: "LLC-SYNC"
+    tags: ["ROC Compliance", "FEMA & RBI Regulations", "Company Formation"],
+    dataPoint: "LEGAL-SYNC",
+    flow: ["Governance Audit", "Document Synthesis", "Regulatory Submission"]
   }
 ]
 
@@ -49,12 +65,11 @@ const Service = () => {
   const container = useRef()
 
   useGSAP(() => {
-    // Reveal rows on scroll
     gsap.from(".service-row", {
       y: 40,
       opacity: 0,
-      stagger: 0.15,
-      duration: 1.2,
+      stagger: 0.1,
+      duration: 1,
       ease: "expo.out",
       scrollTrigger: {
         trigger: container.current,
@@ -66,130 +81,112 @@ const Service = () => {
   return (
     <section ref={container} className="w-full bg-[#FDFDFD] text-[#111] font-[PPNeueMontreal] px-4 md:px-[2vw] py-24 relative overflow-hidden">
       
-      {/* BACKGROUND TEXTURE (Subtle Grid) */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" 
-           style={{ backgroundImage: `radial-gradient(#000 0.5px, transparent 0.5px)`, backgroundSize: '30px 30px' }} />
-
-      {/* HEADER SECTION */}
+      {/* HEADER SECTION - Matched to Hero/About */}
       <div className="grid grid-cols-6 md:grid-cols-12 gap-4 mb-20">
-        <div className="col-span-6 md:col-span-8 relative">
+        <div className="col-span-6 md:col-span-8">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-2 h-2 bg-indigo-600 rounded-full animate-ping" />
-            <p className="text-[10px] uppercase tracking-[0.5em] font-black text-indigo-600">Active Capabilities</p>
+            <div className="w-2 h-2 bg-indigo-600 rounded-full" />
+            <p className="text-[10px] uppercase tracking-[0.5em] font-black text-indigo-600">Service Inventory</p>
           </div>
-          <h2 className="text-[11vw] md:text-[5.5vw] leading-[0.85] font-semibold uppercase tracking-tighter">
-            Strategic <br /> <span className="italic font-light text-black/20">Infrastructures.</span>
+          <h2 className="text-[11vw] md:text-[6vw] leading-[0.85] font-bold uppercase tracking-tighter">
+            Operational <br /> <span className="italic font-light text-black/20">Protocols.</span>
           </h2>
         </div>
-        <div className="col-span-6 md:col-span-4 flex flex-col justify-end md:items-end border-l md:border-l-0 border-black/10 pl-4 md:pl-0">
+        <div className="col-span-6 md:col-span-4 flex flex-col justify-end md:items-end">
           <div className="flex items-center gap-2 mb-2">
-            <Terminal size={12} className="opacity-30" />
-            <p className="text-[9px] font-mono font-bold opacity-30 tracking-widest">SNGWR_OS_v4.0</p>
+            <Terminal size={12} className="text-indigo-600" />
+            <p className="text-[9px] font-mono font-bold opacity-30 tracking-widest">SNGWR_CORE_ENGINE</p>
           </div>
-          <p className="text-[11px] font-medium leading-tight max-w-[200px] md:text-right opacity-60">
-            Translating complex fiscal laws into scalable business logic.
+          <p className="text-[12px] font-medium leading-tight max-w-[240px] md:text-right opacity-60 uppercase tracking-tight">
+            Deploying high-precision fiscal instruments for enterprise resilience.
           </p>
         </div>
       </div>
 
       {/* ACCORDION LIST */}
-      <div className="relative border-t border-black/10 grid grid-cols-6 md:grid-cols-12">
+      <div className="relative border-t border-black/10">
         {services.map((service, idx) => (
-          <div key={service.id} className={`service-row md:col-span-9 col-start-1 col-span-6 group transition-colors duration-500 ${activeIdx === idx ? 'bg-indigo-50/30' : 'hover:bg-zinc-50'}`}>
+          <div key={service.id} className={`service-row group transition-colors duration-500 ${activeIdx === idx ? 'bg-indigo-50/20' : 'hover:bg-zinc-50'}`}>
             <button 
               onClick={() => setActiveIdx(activeIdx === idx ? -1 : idx)}
-              className="w-full py-8 md:py-3 grid grid-cols-6 md:grid-cols-12 items-center text-left px-4"
+              className="w-full py-10 md:py-12 grid grid-cols-6 md:grid-cols-12 items-center text-left px-4"
             >
-              {/* Index */}
               <div className="col-span-1 hidden md:block">
-                <span className={`text-[12px] font-mono transition-opacity duration-500 ${activeIdx === idx ? 'opacity-100 font-bold' : 'opacity-20'}`}>
-                  [{service.id}]
+                <span className={`text-[12px] font-mono transition-opacity duration-500 ${activeIdx === idx ? 'opacity-100 font-bold text-indigo-600' : 'opacity-20'}`}>
+                  /{service.id}
                 </span>
               </div>
 
-              {/* Title Block */}
               <div className="col-span-4 md:col-span-6">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-[9px] uppercase font-black text-indigo-600 bg-indigo-100 px-2 py-0.5 rounded-sm">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-[9px] uppercase font-black text-white bg-black px-2 py-0.5">
                     {service.category}
                   </span>
-                  <span className="text-[9px] font-mono opacity-30">{service.dataPoint}</span>
+                  <span className="text-[9px] font-mono text-indigo-600 font-bold">{service.dataPoint}</span>
                 </div>
-                <h3 className="text-[6.5vw] md:text-[2.8vw] font-medium tracking-tight leading-none group-hover:italic transition-all duration-300">
+                <h3 className="text-[7vw] md:text-[3vw] font-bold tracking-tighter leading-none transition-all duration-300">
                     {service.title}
                 </h3>
               </div>
               
-              {/* Tags (Desktop Center) */}
-              <div className="col-span-4 hidden md:flex gap-4 items-center justify-center">
-                 {service.tags.map(tag => (
-                   <div key={tag} className="flex items-center gap-2">
-                      <div className="w-1 h-1 bg-black/10 rounded-full" />
-                      <span className="text-[9px] uppercase font-bold opacity-40 tracking-wider group-hover:opacity-100 transition-opacity">
-                        {tag}
-                      </span>
-                   </div>
+              <div className="col-span-4 hidden md:flex gap-6 items-center justify-center">
+                 {service.tags.slice(0, 2).map(tag => (
+                   <span key={tag} className="text-[9px] uppercase font-bold opacity-30 tracking-widest">
+                     {tag}
+                   </span>
                  ))}
               </div>
 
-              {/* Toggle Interaction */}
-              <div className="col-span-2 md:col-span-1 flex justify-end items-center gap-4">
-                <div className={`transition-all duration-500 ${activeIdx === idx ? 'scale-100 opacity-100' : 'scale-0 opacity-0'} hidden md:block`}>
-                    <ArrowUpRight size={20} className="text-indigo-600" />
-                </div>
-                <div className={`w-10 h-10 md:w-14 md:h-13 flex items-center justify-center rounded-full border border-black/10 transition-all duration-500 ${activeIdx === idx ? 'bg-black text-white' : 'group-hover:border-black/60'}`}>
+              <div className="col-span-2 md:col-span-1 flex justify-end">
+                <div className={`w-12 h-12 flex items-center justify-center rounded-full border border-black/10 transition-all duration-500 ${activeIdx === idx ? 'bg-indigo-600 text-white border-indigo-600' : 'group-hover:bg-black group-hover:text-white'}`}>
                     {activeIdx === idx ? <Minus size={20} /> : <Plus size={20} />}
                 </div>
               </div>
             </button>
 
-            {/* EXPANDABLE DETAIL CONTENT */}
+            {/* EXPANDABLE DETAIL */}
             <div className={`grid transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] ${activeIdx === idx ? 'grid-rows-[1fr] opacity-100 border-b border-black/10' : 'grid-rows-[0fr] opacity-0'}`}>
               <div className="overflow-hidden">
-                <div className="grid grid-cols-6 md:grid-cols-12 gap-10 px-4 pb-16">
+                <div className="grid grid-cols-6 md:grid-cols-12 gap-12 px-6 pb-20">
                     
-                    {/* The "Story" Column */}
-                    <div className="col-span-6 md:col-start-2 md:col-span-6 space-y-8">
-                        <div className="h-[1px] w-12 bg-indigo-600" />
-                        <p className="text-[4vw] md:text-[1.2vw] leading-[1.2] text-black/80 font-medium tracking-tight">
+                    {/* Content */}
+                    <div className="col-span-6 md:col-start-2 md:col-span-5 space-y-10">
+                        <p className="text-[5vw] md:text-[1.4vw] leading-tight text-black/80 font-medium tracking-tight">
                            {service.description}
                         </p>
-                        <div className="flex flex-wrap gap-4">
-                            <button className="group relative flex items-center gap-6 bg-black text-white px-8 py-4 rounded-full overflow-hidden transition-transform active:scale-95">
-                               <span className="relative z-10 text-[10px] uppercase font-black tracking-widest">Initialize Audit</span>
-                               <ArrowUpRight size={16} className="relative z-10 group-hover:rotate-45 transition-transform duration-300" />
-                               <div className="absolute inset-0 bg-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                            </button>
+                        <div className="flex flex-wrap gap-2">
+                          {service.tags.map(tag => (
+                            <span key={tag} className="px-3 py-1 bg-zinc-100 text-[10px] font-bold uppercase tracking-wider text-black/40">
+                              {tag}
+                            </span>
+                          ))}
                         </div>
                     </div>
 
-                    {/* The "Schematic" Column */}
-                    <div className="col-span-6 md:col-span-4 border-t md:border-t-0 md:border-l border-black/10 pt-10 md:pt-0 md:pl-12">
-                        <div className="grid grid-cols-1 gap-10">
-                            <div className="space-y-4">
-                                <p className="text-[9px] uppercase font-bold opacity-30 tracking-[0.3em]">Operational Flow</p>
-                                <div className="space-y-3">
-                                    {['Data Extraction', 'Regulatory Matching', 'Final Certification'].map((step, i) => (
-                                        <div key={i} className="flex items-center gap-4 group/item">
-                                            <span className="text-[10px] font-mono opacity-20">0{i+1}</span>
-                                            <span className="text-[11px] uppercase font-bold tracking-tight group-hover/item:text-indigo-600 transition-colors cursor-default">
-                                                {step}
-                                            </span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                            
-                            <div className="p-6 bg-zinc-100 rounded-sm border border-black/5 relative overflow-hidden group/card">
-                                <div className="absolute top-0 right-0 p-2 opacity-10 group-hover/card:opacity-100 transition-opacity">
-                                    {service.icon}
-                                </div>
-                                <p className="text-[8px] uppercase font-black opacity-40 mb-2">Technical Core</p>
-                                <p className="text-[12px] font-bold uppercase leading-none">High-Precision <br /> {service.category} Engine</p>
-                            </div>
+                    {/* Workflow Schematic */}
+                    <div className="col-span-6 md:col-start-8 md:col-span-4 space-y-8">
+                        <div>
+                          <p className="text-[10px] uppercase font-black text-indigo-600 mb-6 tracking-[0.2em] flex items-center gap-2">
+                             <Layers size={14} /> Pipeline Execution
+                          </p>
+                          <div className="space-y-4">
+                              {service.flow.map((step, i) => (
+                                  <div key={i} className="flex items-center justify-between border-b border-black/5 pb-2">
+                                      <span className="text-[11px] font-bold uppercase">{step}</span>
+                                      <span className="text-[10px] font-mono opacity-30">STEP_0{i+1}</span>
+                                  </div>
+                              ))}
+                          </div>
+                        </div>
+
+                        <div className="p-6 bg-black text-white rounded-sm flex justify-between items-center group/btn cursor-pointer">
+                           <div>
+                              <p className="text-[8px] uppercase font-bold opacity-50 mb-1">Request Engagement</p>
+                              <p className="text-xs font-bold uppercase tracking-widest">Initialize Protocol</p>
+                           </div>
+                           <ArrowUpRight className="group-hover:rotate-45 transition-transform" />
                         </div>
                     </div>
-
                 </div>
               </div>
             </div>
@@ -197,10 +194,19 @@ const Service = () => {
         ))}
       </div>
 
-      {/* FOOTER DATA LINE */}
-      <div className="mt-20 pt-8 border-t border-black/5 flex justify-between items-center opacity-20">
-        <p className="text-[8px] font-mono font-bold uppercase tracking-widest">© SNGWR & CO // ARCHITECTURAL FINANCE</p>
-        <p className="text-[8px] font-mono font-bold uppercase tracking-widest text-right">ENCRYPTED END-TO-END</p>
+      {/* FOOTER SYSTEM DATA */}
+      <div className="mt-20 flex flex-col md:flex-row justify-between items-center opacity-30 gap-4">
+        <div className="flex items-center gap-6">
+           <div className="flex items-center gap-2">
+              <Scale size={14} />
+              <p className="text-[9px] font-bold uppercase tracking-widest">ICAI Regulatory Standards</p>
+           </div>
+           <div className="flex items-center gap-2">
+              <Cpu size={14} />
+              <p className="text-[9px] font-bold uppercase tracking-widest">Automated Audit Nodes</p>
+           </div>
+        </div>
+        <p className="text-[9px] font-mono font-bold uppercase">SNGWR // DATA_ACCESS_GRANTED</p>
       </div>
 
     </section>
