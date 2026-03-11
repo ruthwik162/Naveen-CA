@@ -13,9 +13,9 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const links = [
-    { name: "Index", href: "/", id: "00" },
-    { name: "The Firm", href: "/about", id: "01" },
-    { name: "Solutions", href: "/service", id: "02" },
+    { name: "Home", href: "/", id: "00" },
+    { name: "About Us", href: "/about", id: "01" },
+    { name: "Services", href: "/service", id: "02" },
     { name: "Workflow", href: "/workflow", id: "03" },
     { name: "Contact", href: "/contact", id: "04" },
   ];
