@@ -105,15 +105,15 @@ const Hero = () => {
 
                         {/* DESCRIPTION - PINNED COL 8 TO 11 */}
                         <div className='col-span-6 md:col-start-8 md:col-span-4 flex flex-col justify-center'>
-                            <div className='stat-node space-y-1'>
-                                <TextY>
-                                    <p className='text-[4vw] md:text-[1.1vw] leading-tight font-medium text-white/70'>
+                            <div className=' space-y-1'>
+                                <TextY animateOnScroll={false} delay={2.1}>
+                                    <p className='text-[4vw] md:text-[1.1vw] leading-[1.1] font-medium text-white/70'>
                                         Architecting fiscal resilience for the global elite. We transform volatile market data into <span className='text-white font-medium underline underline-offset-8 decoration-indigo-500'>impenetrable</span> growth strategies.
                                     </p>
                                 </TextY>
 
-                                <TextY>
-                                    <p className='text-[4vw] md:text-[1.1vw] leading-tight pt-1 font-medium text-white/70'>
+                                <TextY animateOnScroll={false} delay={2.2}>
+                                    <p className='text-[4vw] md:text-[1.1vw] leading-[1.1] pt-1 font-medium text-white/70'>
                                         We design robust tax frameworks that balance efficiency with total compliance. From GST algorithmic management to high-stakes litigation, we act as your fiscal firewall.
                                     </p>
                                 </TextY>

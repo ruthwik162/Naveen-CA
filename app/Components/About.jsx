@@ -5,7 +5,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
-import { Fingerprint, Globe, MoveRight } from 'lucide-react'
+import { ArrowUpRight, Coins, FileSearch, Fingerprint, GanttChartSquare, Globe, Globe2, MoveRight, Scale, ShieldCheck } from 'lucide-react'
 import TextY from './TextY'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
@@ -15,6 +15,46 @@ const About = () => {
     const bgContainerRef = useRef()
     const bgRef = useRef()
     const stickyTriggerRef = useRef()
+
+
+    const serviceList = [
+        {
+            title: "Taxation & Strategy",
+            icon: <ShieldCheck size={32} strokeWidth={1} />,
+            desc: "Advanced GST planning, Direct Tax optimization, and international treaty benefits (DTAA) to minimize leakage.",
+            tag: "FISCAL DEFENSE"
+        },
+        {
+            title: "Audit & Assurance",
+            icon: <FileSearch size={32} strokeWidth={1} />,
+            desc: "Statutory audits that go beyond compliance to identify operational bottlenecks and risk vulnerabilities.",
+            tag: "INTEGRITY CHECK"
+        },
+        {
+            title: "Corporate Advisory",
+            icon: <GanttChartSquare size={32} strokeWidth={1} />,
+            desc: "Structural engineering for startups and conglomerates—from ROC compliance to complex mergers.",
+            tag: "STRUCTURAL"
+        },
+        {
+            title: "Forensic Accounting",
+            icon: <Scale size={32} strokeWidth={1} />,
+            desc: "Investigative deep-dives into financial data to detect anomalies, fraud prevention, and litigation support.",
+            tag: "INVESTIGATIVE"
+        },
+        {
+            title: "Wealth Management",
+            icon: <Coins size={32} strokeWidth={1} />,
+            desc: "Personalized portfolio architecture for HNIs, focusing on tax-efficient wealth preservation and succession.",
+            tag: "ASSET GROWTH"
+        },
+        {
+            title: "Global Compliance",
+            icon: <Globe2 size={32} strokeWidth={1} />,
+            desc: "Cross-border transaction advisory, FEMA compliance, and Transfer Pricing documentation.",
+            tag: "FEMA/IFT"
+        }
+    ]
 
     useGSAP(() => {
         // 1. PIN THE BACKGROUND (The architectural image)
@@ -112,8 +152,19 @@ const About = () => {
                                     From Ledger <br /> <span className='text-indigo-500 italic'>to Logic.</span>
                                 </h3>
                                 <p className='text-zinc-500 font-mono text-[10px] uppercase tracking-widest'>Est. Practice / Hyderabad</p>
+
+                                <div className='p-10 border border-white/10 bg-white/[0.02] backdrop-blur-md'>
+                                    <Fingerprint size={32} className='text-indigo-500 mb-10' />
+                                    <h4 className='text-white text-2xl font-bold uppercase mb-4'>Precision First</h4>
+                                    <p className='text-zinc-400 text-sm leading-[1.1]'>
+                                        Zero-margin for error in statutory compliance. We build the skeleton that allows your enterprise to withstand global scrutiny.
+                                    </p>
+                                </div>
                             </div>
+
                         </div>
+
+
                     </div>
 
                     {/* RIGHT COLUMN: SCROLLING CONTENT */}
@@ -123,7 +174,7 @@ const About = () => {
                             <h2 className='narrative-text text-[7vw] md:text-[2.8vw] leading-[1.1] font-medium tracking-tight text-zinc-300'>
                                 Naveen Sangewar founded this practice with a clear vision — to transform the traditional approach of accounting and compliance into a modern, technology-driven financial ecosystem.
                             </h2>
-                            <p className='narrative-text text-zinc-400 text-lg md:text-xl leading-relaxed'>
+                            <p className='narrative-text text-zinc-400 text-lg md:text-xl leading-[1.1]'>
                                 What once relied heavily on paperwork, manual processes, and fragmented financial records is now being reimagined through structured systems, digital workflows, and intelligent financial planning.
                             </p>
                         </div>
@@ -132,57 +183,67 @@ const About = () => {
                             <h2 className='narrative-text text-[7vw] md:text-[2.8vw] leading-[1.1] font-medium tracking-tight text-zinc-300'>
                                 With a strong foundation in Chartered Accountancy principles, the firm focuses on helping businesses understand the story behind their numbers.
                             </h2>
-                            <p className='narrative-text text-zinc-400 text-lg md:text-xl leading-relaxed'>
+                            <p className='narrative-text text-zinc-400 text-lg md:text-xl leading-[1.1]'>
                                 Every balance sheet, audit report, and tax strategy is treated as an opportunity to provide deeper financial insight and long-term direction for clients. We believe accuracy is the baseline; strategy is the value.
                             </p>
                         </div>
 
                         {/* FOCUSED CARDS WITHIN THE FLOW */}
                         <div className='grid grid-cols-1 gap-6 pt-10'>
-                            <div className='p-10 border border-white/10 bg-white/[0.02] backdrop-blur-md'>
-                                <Fingerprint size={32} className='text-indigo-500 mb-10' />
-                                <h4 className='text-white text-2xl font-bold uppercase mb-4'>Precision First</h4>
-                                <p className='text-zinc-400 text-sm leading-relaxed'>
-                                    Zero-margin for error in statutory compliance. We build the skeleton that allows your enterprise to withstand global scrutiny.
-                                </p>
-                            </div>
+
 
                             <div className='flex flex-col items-end text-right pt-20 relative'>
-                                <span className='text-[15vw] font-black text-white/5 absolute -top-10 right-0 leading-none'>100%</span>
-                                <p className='text-indigo-500 font-mono text-sm mb-2'>TRS-LEVEL: OPTIMAL</p>
-                                <h2 className='text-white text-4xl md:text-5xl font-bold uppercase tracking-tighter'>Compliance <br /> Accuracy</h2>
+                                <span className='text-[35vw] md:text-[15vw] font-black text-white/20 absolute bottom-0 md:-top-10 right-0 leading-none'>100%</span>
+                                <h2 className='text-white text-3xl leading-[1] md:text-5xl font-bold uppercase tracking-tighter'>Compliance <br /> Accuracy</h2>
                             </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-[1px] ">
+                            {serviceList.map((service, index) => (
+                                <div
+                                    key={index}
+                                    className="service-card group relative  p-1 items-center flex flex-col justify-between  transition-all duration-500 hover:bg-zinc-950"
+                                >
+                                    {/* Hover Gradient Effect */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                                    <div>
+
+
+                                        <h3 className="text-white text-xl md:text-2xl leading-tight font-bold uppercase tracking-tight mb-4">
+                                            {service.title}
+                                        </h3>
+                                        <TextY>
+                                            <p className="text-zinc-500 text-[12px] md:text-sm font-bold leading-tight group-hover:text-zinc-300 transition-colors duration-300">
+                                                {service.desc}
+                                            </p>
+                                        </TextY>
+                                    </div>
+
+
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
 
                 {/* QUOTE REVEAL */}
-                <div className='col-span-12 py-60 flex flex-col items-center text-center'>
+                <div className='col-span-12 py-5 md:py-10 flex flex-col items-center text-center'>
                     <Globe size={40} className='text-indigo-500 mb-12 animate-pulse' />
                     <TextY>
-                        <p className='text-[6vw] md:text-[2.8vw] text-zinc-200 font-light leading-tight max-w-5xl'>
+                        <p className='text-[6vw] md:text-[2.8vw] text-zinc-200 font-light leading-[0.9] max-w-3xl'>
                             "A balance sheet is just the skeleton. Our job is to build the <span className='text-white font-bold uppercase'>muscle</span> that allows your business to move and scale."
                         </p>
                     </TextY>
 
                     <div className='mt-16 flex flex-col items-center gap-4'>
                         <span className='w-[1px] h-24 bg-gradient-to-b from-indigo-500 to-transparent' />
-                        <p className='text-white font-black uppercase tracking-widest text-[10px]'>Naveen Sangewar, Founder</p>
+                        <p className='text-white font-semibold  tracking-widest text-[10px]'>Naveen Sangewar, Founder</p>
                     </div>
                 </div>
             </div>
 
-            {/* SYSTEM HUD */}
-            <div className='fixed bottom-10 right-10 z-50 pointer-events-none opacity-40 mix-blend-difference'>
-                <div className='flex flex-col items-end gap-2 text-white font-mono text-[9px] tracking-widest'>
-                    <p>STATUS: SYSTEM_ACTIVE</p>
-                    <div className='flex items-center gap-2'>
-                        <span className='w-2 h-2 rounded-full bg-indigo-500 animate-ping' />
-                        <p>COORD: HYD_CORE</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </section >
     )
 }
 

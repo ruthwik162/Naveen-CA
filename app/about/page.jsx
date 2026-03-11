@@ -1,190 +1,244 @@
 "use client"
 
 import React, { useRef } from 'react'
-import { images } from '@/public/assets/assets'
-import { ReactLenis } from '@studio-freight/react-lenis'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
-import { SplitText } from 'gsap/SplitText' // Ensure this is installed or use a polyfill
-import { Fingerprint, ShieldCheck, Plus, ArrowUpRight } from 'lucide-react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { SplitText } from 'gsap/SplitText'
+import { ArrowUpRight, Coins, FileSearch, Fingerprint, GanttChartSquare, Globe, Globe2, MoveRight, Scale, ShieldCheck, Cpu } from 'lucide-react'
+import { ReactLenis } from '@studio-freight/react-lenis'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
-const AboutStory = () => {
-    const container = useRef()
-    const svgPath = useRef()
+const About = () => {
+    const sectionRef = useRef()
+    const bgContainerRef = useRef()
+    const bgRef = useRef()
+    const stickyTriggerRef = useRef()
+
+    const serviceList = [
+        {
+            title: "Taxation & Strategy",
+            icon: <ShieldCheck size={32} strokeWidth={1} />,
+            desc: "Advanced GST planning, Direct Tax optimization, and international treaty benefits (DTAA) to minimize leakage.",
+            tag: "FISCAL DEFENSE"
+        },
+        {
+            title: "Audit & Assurance",
+            icon: <FileSearch size={32} strokeWidth={1} />,
+            desc: "Statutory audits that go beyond compliance to identify operational bottlenecks and risk vulnerabilities.",
+            tag: "INTEGRITY CHECK"
+        },
+        {
+            title: "Corporate Advisory",
+            icon: <GanttChartSquare size={32} strokeWidth={1} />,
+            desc: "Structural engineering for startups and conglomerates—from ROC compliance to complex mergers.",
+            tag: "STRUCTURAL"
+        },
+        {
+            title: "Forensic Accounting",
+            icon: <Scale size={32} strokeWidth={1} />,
+            desc: "Investigative deep-dives into financial data to detect anomalies, fraud prevention, and litigation support.",
+            tag: "INVESTIGATIVE"
+        },
+        {
+            title: "Wealth Management",
+            icon: <Coins size={32} strokeWidth={1} />,
+            desc: "Personalized portfolio architecture for HNIs, focusing on tax-efficient wealth preservation and succession.",
+            tag: "ASSET GROWTH"
+        },
+        {
+            title: "Global Compliance",
+            icon: <Globe2 size={32} strokeWidth={1} />,
+            desc: "Cross-border transaction advisory, FEMA compliance, and Transfer Pricing documentation.",
+            tag: "FEMA/IFT"
+        }
+    ]
 
     useGSAP(() => {
-        // 1. The SVG "Audit Trail" Animation
-        const path = svgPath.current;
-        const pathLength = path.getTotalLength();
-        gsap.set(path, { strokeDasharray: pathLength, strokeDashoffset: pathLength });
+        // 1. PIN THE BACKGROUND 
+        ScrollTrigger.create({
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            pin: bgContainerRef.current,
+            pinSpacing: false,
+        })
 
-        gsap.to(path, {
-            strokeDashoffset: 0,
-            ease: "none",
+        // 2. Background Visual Polish (Blur & Scale)
+        gsap.to(bgRef.current, {
             scrollTrigger: {
-                trigger: container.current,
+                trigger: sectionRef.current,
                 start: "top top",
-                end: "bottom bottom",
-                scrub: 1,
-            }
-        });
+                end: "bottom top",
+                scrub: true,
+            },
+            scale: 1.15,
+            filter: "brightness(0.15) blur(8px)",
+            ease: "none"
+        })
 
-        // 2. High-End Text Reveal (Line by Line)
-        const textElements = gsap.utils.toArray(".reveal-text");
-        textElements.forEach((el) => {
-            const split = new SplitText(el, { type: "lines", linesClass: "overflow-hidden" });
-            const childSplit = new SplitText(el, { type: "lines", linesClass: "line-item" });
-
-            gsap.from(childSplit.lines, {
-                yPercent: 100,
-                stagger: 0.05,
-                duration: 1.2,
-                ease: "expo.out",
+        // 3. Narrative Text Highlight (Jesko Style)
+        const narrativeElements = gsap.utils.toArray(".narrative-text");
+        narrativeElements.forEach((text) => {
+            const split = new SplitText(text, { type: "words" });
+            gsap.from(split.words, {
                 scrollTrigger: {
-                    trigger: el,
-                    start: "top 85%",
-                }
+                    trigger: text,
+                    start: "top 80%",
+                    end: "top 30%",
+                    scrub: 0.8,
+                },
+                opacity: 0.1,
+                y: 20,
+                rotateX: -30,
+                stagger: 0.1,
+                color: "#4f46e5", // Fades from indigo to white/zinc
+                ease: "power2.out"
             });
         });
 
-        // 3. Image Clip Reveal
-        gsap.from(".img-mask", {
-            clipPath: "inset(0% 0% 100% 0%)",
-            duration: 1.5,
-            ease: "expo.inOut",
+        // 4. Progress Bar
+        gsap.to(".scroll-progress", {
             scrollTrigger: {
-                trigger: ".img-section",
-                start: "top 60%",
-            }
+                trigger: stickyTriggerRef.current,
+                start: "top 20%",
+                end: "bottom bottom",
+                scrub: true,
+            },
+            scaleY: 1,
+            backgroundColor: "#C5A059", // Transition to Gold
+            ease: "none"
         });
 
-    }, { scope: container });
-
-    const services = [
-        { title: "Direct Taxation", category: "Audit / 01", desc: "Engineering legal frameworks that optimize tax outflow while maintaining airtight compliance with ICAI standards." },
-        { title: "Statutory Audit", category: "Corporate / 02", desc: "Forensic examination of financial records to build stakeholder trust and investor-grade transparency." },
-        { title: "GST Ecosystems", category: "Advisory / 03", desc: "Navigating the complexities of indirect tax through algorithmic precision and proactive risk mitigation." }
-    ];
+    }, { scope: sectionRef })
 
     return (
         <ReactLenis root>
-            <main ref={container} className='relative w-full bg-white text-[#111] font-[PPNeueMontreal] selection:bg-indigo-600 selection:text-white cursor-crosshair'>
-                
-                {/* Fixed Blueprint Grid Lines */}
-                <div className="fixed inset-0 grid grid-cols-6 md:grid-cols-12 px-4 md:px-[2vw] pointer-events-none z-0">
-                    {[...Array(13)].map((_, i) => (
-                        <div key={i} className="border-r border-black/[0.03] h-full" />
-                    ))}
+            <section ref={sectionRef} className='w-full bg-[#0A0A0A] relative font-[PPNeueMontreal] overflow-hidden selection:bg-[#C5A059] selection:text-black'>
+
+                {/* PINNED BACKGROUND LAYER */}
+                <div ref={bgContainerRef} className="absolute inset-0 w-full h-screen z-0 overflow-hidden">
+                    <div
+                        ref={bgRef}
+                        className="absolute inset-0 w-full h-full bg-cover bg-center"
+                        style={{ backgroundImage: `url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop')` }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A] via-transparent to-[#0A0A0A] opacity-90" />
                 </div>
 
-                {/* Background Storytelling Line */}
-                <svg className="absolute left-0 top-0 w-full h-full pointer-events-none z-10 opacity-20" viewBox="0 0 1000 4000" fill="none" preserveAspectRatio="none">
-                    <path ref={svgPath} d="M500 0 V600 C500 800 100 800 100 1000 V1800 C100 2000 900 2000 900 2200 V3000 C900 3200 500 3200 500 3400 V4000" stroke="#4f46e5" strokeWidth="1" />
-                </svg>
+                {/* CONTENT LAYER */}
+                <div className='relative z-10 px-6 md:px-[5vw]'>
 
-                {/* HERO: PROFILE HEADER */}
-                <section className='relative min-h-screen pt-32 px-4 md:px-[2vw] z-20'>
-                    <div className='flex justify-between items-end border-b border-black/10 pb-6 mb-20'>
-                        <div className='flex items-center gap-3'>
-                            <Fingerprint size={18} className="text-indigo-600" />
-                            <p className='text-[10px] uppercase font-bold tracking-[0.3em]'>Chartered Accountant / / 2026</p>
+                    {/* INITIAL SPACER / HERO HEAD */}
+                    <div className="h-[80vh] flex flex-col justify-end pb-32">
+                        <div className="flex items-center gap-6 mb-6">
+                            <Cpu size={18} className="text-[#C5A059] animate-pulse" />
+                            <p className='text-[10px] uppercase font-bold tracking-[0.5em] text-[#C5A059]'>The Methodology / 01</p>
                         </div>
-                        <p className='text-[10px] uppercase opacity-40 italic'>Forensic Intelligence</p>
+                        <h1 className='text-white text-[15vw] md:text-[10vw] font-bold uppercase tracking-tighter leading-[0.8]'>
+                            About <br /> <span className="italic font-light text-zinc-500 opacity-50">The Practice.</span>
+                        </h1>
                     </div>
 
-                    <div className='grid grid-cols-6 md:grid-cols-12 gap-8 items-end'>
-                        <div className='col-span-6 md:col-span-9'>
-                            <h1 className='reveal-text text-[14vw] md:text-[9vw] font-semibold uppercase leading-[0.8] tracking-tighter italic'>
-                                Naveen <br /> Sangewar.
-                            </h1>
-                        </div>
-                        <div className='col-span-6 md:col-span-3 pb-2'>
-                            <p className='reveal-text text-[4.5vw] md:text-[1.1vw] font-medium leading-tight text-black/60'>
-                                Rebuilding the bridge between complex regulation and financial clarity. 
-                            </p>
-                        </div>
-                    </div>
-                </section>
+                    {/* STICKY NARRATIVE SECTION */}
+                    <div ref={stickyTriggerRef} className='max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-12 relative gap-12'>
 
-                {/* THE PHILOSOPHY: IMAGE SECTION */}
-                <section className='img-section relative py-32 px-4 md:px-[2vw] z-20 grid grid-cols-6 md:grid-cols-12 gap-10 md:gap-20'>
-                    <div className='col-span-6 md:col-span-7'>
-                        <div className='img-mask aspect-[4/5] md:aspect-video overflow-hidden bg-zinc-100 border border-black/5'>
-                            <img src={images.naveen.src} className='w-full h-full object-cover grayscale brightness-110 contrast-125 transition-transform duration-1000 hover:scale-105' alt="Portrait" />
+                        {/* LEFT COLUMN: STICKY BRAND BLOCK */}
+                        <div className='col-span-12 md:col-span-5 mb-20 md:mb-0'>
+                            <div className='md:sticky md:top-40 h-fit'>
+                                <div className='flex gap-8 mb-12'>
+                                    <div className='hidden md:block w-[1px] h-[400px] bg-white/5 relative overflow-hidden'>
+                                        <div className='scroll-progress absolute top-0 left-0 w-full h-full bg-indigo-600 origin-top scale-y-0' />
+                                    </div>
+
+                                    <div className='flex flex-col gap-8'>
+                                        <h3 className='text-[10vw] md:text-[5vw] font-bold leading-[0.85] uppercase tracking-tighter text-white'>
+                                            From Ledger <br /> <span className='text-[#C5A059] italic'>to Logic.</span>
+                                        </h3>
+                                        <p className='text-[#C5A059] font-mono text-[10px] uppercase tracking-[0.3em]'>Est. 2026 / Hyderabad</p>
+
+                                        <div className='p-12 border border-white/5 bg-white/[0.01] backdrop-blur-2xl relative group overflow-hidden transition-all duration-700 hover:border-[#C5A059]/30'>
+                                            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#C5A059]/50 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                                            <Fingerprint size={32} className='text-[#C5A059] mb-12 opacity-80' />
+                                            <h4 className='text-white text-3xl font-bold uppercase mb-6 tracking-tight'>Precision First</h4>
+                                            <p className='text-zinc-500 text-sm leading-relaxed uppercase tracking-wider font-medium'>
+                                                Zero-margin for error in statutory compliance. We build the skeleton that allows your enterprise to withstand global scrutiny.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className='col-span-6 md:col-span-5 flex flex-col justify-center'>
-                        <div className='space-y-10'>
-                            <div>
-                                <h4 className='flex items-center gap-2 text-[10px] uppercase font-bold text-indigo-600 mb-6'>
-                                    <Plus size={12} /> The Approach
-                                </h4>
-                                <h2 className='reveal-text text-[8vw] md:text-[3.5vw] font-semibold uppercase leading-[0.9] tracking-tighter italic mb-8'>
-                                    Precision over <br /> Probability.
+
+                        {/* RIGHT COLUMN: THE SCROLLING STORY */}
+                        <div className='col-span-12 md:col-start-7 md:col-span-6 flex flex-col gap-48 pb-60'>
+
+                            <div className='flex flex-col gap-12'>
+                                <h2 className='narrative-text text-[8vw] md:text-[3.2vw] leading-[1.05] font-bold tracking-tighter text-white uppercase'>
+                                    Naveen Sangewar founded this practice to transform traditional compliance into a modern, technology-driven financial ecosystem.
                                 </h2>
-                                <p className='reveal-text text-[4.5vw] md:text-[1.2vw] font-medium text-black/70 leading-relaxed max-w-md'>
-                                    I believe a Chartered Accountant’s greatest value is not in the tax saved, but in the visibility provided. We find anomalies before they become liabilities.
+                                <p className='narrative-text text-zinc-500 text-lg md:text-xl leading-relaxed uppercase font-medium tracking-wide'>
+                                    What once relied on fragmented records is now being reimagined through structured systems, digital workflows, and intelligent planning.
                                 </p>
                             </div>
-                            <div className='border-t border-black/10 pt-10 flex items-center gap-4'>
-                                <ShieldCheck className='text-indigo-600' />
-                                <span className='text-[10px] uppercase font-bold tracking-widest'>Statutory Compliance Leader</span>
+
+                            <div className='flex flex-col gap-12'>
+                                <h2 className='narrative-text text-[8vw] md:text-[3.2vw] leading-[1.05] font-bold tracking-tighter text-white uppercase'>
+                                    We focus on helping businesses understand the story behind their numbers. Accuracy is the baseline; strategy is the value.
+                                </h2>
+                                <p className='narrative-text text-zinc-500 text-lg md:text-xl leading-relaxed uppercase font-medium tracking-wide'>
+                                    Every audit report and tax strategy is treated as an opportunity to provide deeper insight and long-term direction for our clients.
+                                </p>
+                            </div>
+
+                            {/* SERVICE GRID WITHIN FLOW */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/5">
+                                {serviceList.map((service, index) => (
+                                    <div
+                                        key={index}
+                                        className="group relative p-10 bg-[#0A0A0A] transition-all duration-500 hover:bg-[#111]"
+                                    >
+                                        <div className="absolute top-0 left-0 w-full h-[1px] bg-[#C5A059] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                                        <div className="text-[#C5A059] mb-16 opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">
+                                            {service.icon}
+                                        </div>
+                                        <h3 className="text-white text-xl font-bold uppercase tracking-tight mb-4">
+                                            {service.title}
+                                        </h3>
+                                        <p className="text-zinc-600 text-[11px] font-bold uppercase tracking-widest leading-relaxed group-hover:text-zinc-400">
+                                            {service.desc}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* BIG STAT */}
+                            <div className='flex flex-col items-end text-right pt-20 relative group'>
+                                <span className='text-[30vw] md:text-[18vw] font-black text-white/[0.02] absolute -bottom-10 right-0 leading-none group-hover:text-[#C5A059]/5 transition-colors duration-700'>100%</span>
+                                <h2 className='text-white text-5xl md:text-7xl font-bold uppercase tracking-tighter leading-[0.8] relative z-10'>
+                                    Compliance <br /> <span className="text-[#C5A059]">Accuracy.</span>
+                                </h2>
                             </div>
                         </div>
                     </div>
-                </section>
 
-                {/* SOLUTIONS: THE LEDGER GRID */}
-                <section className='relative py-32 px-4 md:px-[2vw] z-20'>
-                    <div className='flex justify-between items-end mb-20'>
-                        <h2 className='reveal-text text-[10vw] md:text-[5vw] font-semibold uppercase tracking-tighter italic'>Solutions.</h2>
-                        <ArrowUpRight size={40} strokeWidth={1} className='opacity-20' />
-                    </div>
-
-                    <div className='grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-black/5 border border-black/5'>
-                        {services.map((s, i) => (
-                            <div key={i} className='bg-white p-12 group hover:bg-zinc-50 transition-colors duration-500'>
-                                <p className='text-[10px] font-bold uppercase tracking-widest text-indigo-600 mb-16'>{s.category}</p>
-                                <h3 className='text-[7vw] md:text-[2vw] font-semibold uppercase mb-6 tracking-tight'>{s.title}</h3>
-                                <p className='text-[4vw] md:text-[1vw] font-medium text-black/40 group-hover:text-black/70 transition-colors leading-relaxed'>
-                                    {s.desc}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* METHODOLOGY: DARK SECTION */}
-                <section className='relative min-h-screen bg-[#0A0A0B] text-white py-40 px-4 md:px-[10vw] z-20'>
-                    <div className='max-w-5xl'>
-                        <div className='flex items-center gap-4 mb-16 opacity-30'>
-                            <div className='w-8 h-[1px] bg-white' />
-                            <p className='text-[10px] uppercase font-bold tracking-[0.4em]'>The Methodology</p>
-                        </div>
-                        <h2 className='reveal-text text-[9vw] md:text-[5vw] font-semibold uppercase leading-[0.9] tracking-tighter mb-20'>
-                            "A clean ledger is the <br /> <span className='text-indigo-500 italic'>silent authority</span> of <br /> a scaling business."
+                    {/* FINAL QUOTE BLOCK */}
+                    <div className='py-60 flex flex-col items-center text-center'>
+                        <Globe size={48} className='text-[#C5A059] mb-16 opacity-50' />
+                        <h2 className='text-[8vw] md:text-[4vw] text-white font-bold leading-[0.9] max-w-5xl uppercase tracking-tighter'>
+                            "A balance sheet is just the skeleton. Our job is to build the <span className='text-[#C5A059] italic'>muscle</span> that allows your business to scale."
                         </h2>
-                        <div className='grid grid-cols-1 md:grid-cols-2 gap-16 border-t border-white/10 pt-16'>
-                            <p className='reveal-text text-[4.5vw] md:text-[1.2vw] font-medium leading-relaxed opacity-50'>
-                                Most entrepreneurs view a CA as a seasonal cost. We teach you to see us as your Structural Engineers. Monthly forensic oversight allows you to take high-stakes risks with total legal safety.
-                            </p>
-                            <p className='reveal-text text-[4.5vw] md:text-[1.2vw] font-medium leading-relaxed opacity-50'>
-                                From the MSMEs of Hyderabad to global entities, we act as the firewall between your vision and regulatory friction.
-                            </p>
+
+                        <div className='mt-24 flex flex-col items-center gap-6'>
+                            <div className='w-[1px] h-32 bg-gradient-to-b from-[#C5A059] to-transparent' />
+                            <p className='text-[#C5A059] font-bold tracking-[0.4em] text-[10px] uppercase'>Naveen Sangewar, Founder</p>
                         </div>
                     </div>
-                </section>
-                
-                <style jsx>{`
-                    .overflow-hidden { overflow: hidden; }
-                    .line-item { display: block; }
-                `}</style>
-            </main>
+                </div>
+            </section>
         </ReactLenis>
     )
 }
 
-export default AboutStory
+export default About

@@ -67,7 +67,7 @@ const TextY = ({ children, animateOnScroll = true, delay = 0 }) => {
                     ...animateProps,
                     scrollTrigger: {
                         trigger: containerRef.current,
-                        start: "top 80%",
+                        start: "top 85%",
                         once: true,
                     }
                 })

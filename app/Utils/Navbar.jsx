@@ -16,7 +16,7 @@ const Navbar = () => {
     { name: "Index", href: "/", id: "00" },
     { name: "The Firm", href: "/about", id: "01" },
     { name: "Solutions", href: "/service", id: "02" },
-    { name: "Workflow", href: "/process", id: "03" },
+    { name: "Workflow", href: "/workflow", id: "03" },
     { name: "Contact", href: "/contact", id: "04" },
   ];
 
@@ -63,8 +63,6 @@ const Navbar = () => {
         {/* Drawer Header (Internal) */}
         <div className="p-8 border-b border-black/5 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <Cpu size={14} className="text-indigo-600 animate-pulse" />
-            <span className="text-[9px] font-black uppercase tracking-[0.3em] opacity-40">System_Access</span>
           </div>
 
         </div>
